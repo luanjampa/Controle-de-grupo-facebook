@@ -1,8 +1,10 @@
 import urllib.request
 import json
-#copie o formato no exemplo e pegue o access_token
+keywords =  ['a','b','sdsds',
+            'dfdfo','aff','meu telefone',
+            'email','porra','faaa',
+            'test','interessado','puts'] # palavras que serão buscadas pelo programa
 #em https://developers.facebook.com/tools/explorer
-proibido = 'pode'
 url = 'https://graph.facebook.com/367875099923704/feed?access_token=<token>'
 resp = urllib.request.urlopen(url).read()
 data = json.loads(resp.decode('utf-8'))
@@ -14,10 +16,6 @@ for comentario in comentarios['data']:
     nome = dados['name']
     codigo = comentario['id']
     mensagem = comentario['message']
-    print("ID: %s NOME: %s MENSAGEM: %s" %(codigo,nome,mensagem))
-
-
-
-
-
-
+    for x in keywords:
+        if x in mensagem:
+            print("ID: %s NOME: %s MENSAGEM: %s" %(codigo,nome,mensagem))
