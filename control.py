@@ -29,8 +29,8 @@ Este programa é um software livre; você pode redistribuí-lo e/ou
 """
 
 #author: Luan Pacote
-#contact: lsouza
-import urllib,urllib.request,json
+#contact: 
+import json,requests
 
 def ListarPublicacao(comentarios,cont):
     comentarios = postagem['comments']
@@ -43,25 +43,25 @@ def ListarPublicacao(comentarios,cont):
         mensagem = mensagem.lower()
         for x in keywords:
             if x in mensagem:
-                print("ID: %s NOME: %s MENSAGEM: %s" %(codigo_usuario,nome,mensagem))
-
-
-
-
+                print("ID: %s NOME: %s MENSAGEM: %s" %(codigo_usuario,nome,mensagem)
 
 keywords =  ['','',''] # palavras que serão buscadas pelo programa
 #em https://developers.facebook.com/tools/explorer
 token = ""
-url ="https://graph.facebook.com/367875099923704/feed?access_token=" + token
-resp = urllib.request.urlopen(url).read()
-data = json.loads(resp.decode('utf-8'))
+url = requests.get("https://graph.facebook.com/367875099923704/feed?access_token=" + token)
+resp = url.json()
 ini = 0 #em que postagem inicia a busca, lembrando que o indice comeca do 0
 fim = 8 # limite de postagem que sera buscada, o facebook so libera ate 9 paginas por vez, ou seja de 0 a 8
 while ini <= fim:
     try:
-        postagem = data['data'][ini]
+        postagem = resp['data'][ini]
         ListarPublicacao(postagem,ini)
     except:
         print('')
     ini += 1
+
+
+
+#r = requests.delete("/367875099923704/members/100003481959842")
+
 
